@@ -6,16 +6,19 @@ import HomePage from './pages/HomePage'
 import ProblemsPage from './pages/ProblemsPage'
 import { useUser } from '@clerk/clerk-react'
 import { Toaster } from 'react-hot-toast'
+import DashBoardPage from './pages/DashBoardPage'
 
 
 function App() {
 
-  const {isSignedIn} = useUser()
+  const {isSignedIn,isLoaded} = useUser()
+  
+  if(!isLoaded)return null;
   return (
     <>
     <Routes>
-      <Route path='/' element={<HomePage/>}/>
-     
+      <Route path='/' element={ !isSignedIn ? <HomePage/> : <Navigate to={"/dashboard"}/> }/>
+      <Route path='/dashboard' element={ !isSignedIn ? <DashBoardPage/> : <Navigate to={"/"}/> }/>
       <Route path='/problems' element={isSignedIn ? <ProblemsPage/> : <Navigate to={"/"}/>}/>
 
 
