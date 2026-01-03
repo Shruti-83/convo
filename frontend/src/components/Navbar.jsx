@@ -1,6 +1,7 @@
 import { UserButton } from '@clerk/clerk-react';
 import { BookOpenIcon, LayoutDashboardIcon, SparkleIcon } from 'lucide-react'
 import { Link, useLocation } from "react-router-dom"
+import { sessionApi } from '../api/session';
 
 function Navbar() {
   const location = useLocation();
