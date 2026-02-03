@@ -96,6 +96,8 @@ export async function joinSession(req, res) {
         const { id } = req.params
         const userId = req.user._id
         const clerkId = req.user.clerkId
+        
+
 
         const session = await Session.findById(id)
 
@@ -128,6 +130,11 @@ export async function joinSession(req, res) {
 export async function endSession(req, res) {
     try {
         const { id } = req.params;
+        if (!req.user) {
+  return res.status(401).json({ message: "Unauthorized" });
+}
+
+
         const userId = req.user._id;
         const session = await Session.findById(id);
 
@@ -145,12 +152,21 @@ export async function endSession(req, res) {
 
 
         //delete the stream vedio call
-        const call = streamClient.video.call("default", session.callId)
-        await call.delete({ hard: true })
-
+       
+       try {
+  const call = streamClient.video.call("default", session.callId);
+  await call.delete({ hard: true });
+} catch (err) {
+  console.warn("Stream call already deleted or missing");
+}
         //delete the stream chat chaanel
-        const channel = chatClient.channel("messaging", session.callId)
-        await channel.delete()
+       try {
+  const channel = chatClient.channel("messaging", session.callId);
+  await channel.delete();
+} catch (err) {
+  console.warn("Chat channel already deleted or missing");
+}
+
 
         session.status = "completed"
         await session.save()

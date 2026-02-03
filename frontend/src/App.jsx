@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast'
 import DashBoardPage from './pages/DashBoardPage'
 import ProblemPage from './pages/ProblemPage'
 import { SignIn, SignUp } from "@clerk/clerk-react";
+import SessionPage from './pages/SessionPage'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
 
         <Route path='/problems' element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
         <Route path='/problems/:id' element={isSignedIn ? <ProblemPage /> : <Navigate to={"/"} />} />
+         <Route path='/session/:id' element={isSignedIn ? <SessionPage /> : <Navigate to={"/"} />} />
 
 
       </Routes>

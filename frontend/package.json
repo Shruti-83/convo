@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/clerk-react": "^5.53.4",
     "@monaco-editor/react": "^4.7.0",
+    "@stream-io/video-react-sdk": "^1.31.3",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-query": "^5.90.12",
     "axios": "^1.13.2",
@@ -25,6 +26,8 @@
     "react-resizable-panels": "^4.0.15",
     "react-router": "^7.9.6",
     "react-router-dom": "^7.11.0",
+    "stream-chat": "^9.28.0",
+    "stream-chat-react": "^13.13.3",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
@@ -32,6 +35,7 @@
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.4",
+    "baseline-browser-mapping": "^2.9.12",
     "daisyui": "^5.5.5",
     "eslint": "^9.36.0",
     "eslint-plugin-react-hooks": "^5.2.0",
