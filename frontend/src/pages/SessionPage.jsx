@@ -245,25 +245,29 @@ const handleEndSession = () => {
               <Separator className="h-2 bg-base-300 hover:bg-primary transition-colors cursor-row-resize" />
 
               <Panel defaultSize={50} minSize={20}>
-                <Group direction="vertical">
-                  <Panel defaultSize={70} minSize={30}>
-                    <CodeEditorPanel
-                      selectedLanguage={selectedLanguage}
-                      code={code}
-                      isRunning={isRunning}
-                      onLanguageChange={handleLanguageChange}
-                      onCodeChange={(value) => setCode(value)}
-                      onRunCode={handleRunCode}
-                    />
-                  </Panel>
+  <Group direction="horizontal">
+    
+    {/* LEFT: EDITOR */}
+    <Panel defaultSize={65} minSize={40}>
+      <CodeEditorPanel
+        selectedLanguage={selectedLanguage}
+        code={code}
+        isRunning={isRunning}
+        onLanguageChange={handleLanguageChange}
+        onCodeChange={(value) => setCode(value)}
+        onRunCode={handleRunCode}
+      />
+    </Panel>
 
-                  <Separator className="h-2 bg-base-300 hover:bg-primary transition-colors cursor-row-resize" />
+    <Separator className="w-2 bg-base-300 cursor-col-resize" />
 
-                  <Panel defaultSize={30} minSize={15}>
-                    <OutputPanel output={output} />
-                  </Panel>
-                </Group>
-              </Panel>
+    {/* RIGHT: OUTPUT */}
+    <Panel defaultSize={35} minSize={25}>
+      <OutputPanel output={output} />
+    </Panel>
+
+  </Group>
+</Panel>
             </Group>
           </Panel>
 

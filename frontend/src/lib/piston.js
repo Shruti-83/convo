@@ -1,11 +1,11 @@
 //  pisotn api is a srevice for code execution 
 
-const PISTON_API = "https://emkc.org/api/v2/piston"
+const PISTON_API = "http://localhost:5000"
 
 const LANGUAGE_VERSIONS = {
     javascript: { language: "javascript", version: "18.15.0" },
     python: { language: "python", version: "3.10.0" },
-    go: { language: "go", version: "18.15.0" },
+    go: { language: "go", version: "1.20.0" },
     java: { language: "java", version: "15.0.2" },
     
 }
@@ -28,16 +28,17 @@ export async function executeCode(language,code) {
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify({
-                language:languageConfig.language,
-                version:languageConfig.version,
-                files: [
-                    {
-                        name:`main.${getFileExtension(language)}`,
-                        content:code
-                    }
-                ]
-            })
+           body: JSON.stringify({
+  language: languageConfig.language,
+  version: languageConfig.version,
+  files: [
+    {
+      name: `main.${getFileExtension(language)}`,
+      content: code,
+    },
+  ],
+  stdin: "", // ✅ ADD THIS
+})
         })
         if(!response.ok){
             return {
@@ -47,9 +48,15 @@ export async function executeCode(language,code) {
         }
         const data  =await response.json()
 
-        const output = data.run.output || ""
-        const stderr = data.run.stderr || ""
+        if (!data.run) {
+  return {
+    success: false,
+    error: data.message || "Execution failed (no run data)",
+  };
+}
 
+const output = data.run.output || "";
+const stderr = data.run.stderr || "";
         if(stderr){
             return {
                 success:false,

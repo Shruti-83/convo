@@ -2,6 +2,7 @@ import Session from "../models/Session.js"
 import { chatClient, streamClient } from "../lib/stream.js"
 export async function createSession(req, res) {
     try {
+        
         const { problem, difficulty } = req.body
         const userId = req.user._id
         const clerkId = req.user.clerkId
@@ -40,7 +41,7 @@ export async function createSession(req, res) {
     }
 }
 
-export async function getActiveSessions(_, res) {
+export async function getActiveSessions(req, res) {
   try {
     const sessions = await Session.find({ status: "active" })
       .populate("host", "name profileImage email clerkId")

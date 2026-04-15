@@ -6,8 +6,10 @@ import { deleteStreamUser, upsertStreamUser } from "./stream.js"
 export const inngest = new Inngest({id:"convo"})
 
 const syncUser = inngest.createFunction(
+   
     {id:"sync-user"},
     {event:"clerk/user.created"},
+    
     async ({event}) =>{
         await connectDB()
 
@@ -17,7 +19,8 @@ const syncUser = inngest.createFunction(
             clerkId :id,
             email:email_addresses[0]?.email_address,
             name:`${first_name || ""} ${last_name || ""}`,
-            profileImage:image_url
+            profileImage:image_url,
+            role:"candidate"
         }
         await User.create(newUser)
 
@@ -25,8 +28,11 @@ const syncUser = inngest.createFunction(
             await upsertStreamUser({
                 id: newUser.clerkId.toString(),
                 name:newUser.name,
-                image:newUser.profileImage
+                image:newUser.profileImage,
+                role:newUser.role
+
             })
+             console.log("🔥 SYNC FUNCTION RUNNING");
             // challenge: send a welcome email here later
             
 
